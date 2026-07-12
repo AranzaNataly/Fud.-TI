@@ -1,0 +1,2165 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Apresentação Interativa - PC Gamer, Servidor de IA Local e Projeto IoT de Clima">
+    <title>Apresentação Tecnológica: PC Gamer, IA & IoT</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for Dynamic Themes */
+        :root {
+            /* Default: PC Gamer Theme (Cyberpunk Neon) */
+            --theme-color-primary: #a855f7;
+            --theme-color-secondary: #06b6d4;
+            --theme-color-accent: #f43f5e;
+            --theme-bg: #09090b;
+            --theme-card-bg: rgba(24, 24, 27, 0.7);
+            --theme-card-border: rgba(168, 85, 247, 0.2);
+            --theme-text-primary: #fafafa;
+            --theme-text-secondary: #a1a1aa;
+            --theme-glow: 0 0 20px rgba(168, 85, 247, 0.35);
+            --font-title: 'Orbitron', 'Inter', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition-speed: 0.5s;
+        }
+        .theme-gamer {
+            --theme-color-primary: #a855f7;
+            --theme-color-secondary: #06b6d4;
+            --theme-color-accent: #f43f5e;
+            --theme-bg: #09090b;
+            --theme-card-bg: rgba(24, 24, 27, 0.7);
+            --theme-card-border: rgba(168, 85, 247, 0.25);
+            --theme-text-primary: #fafafa;
+            --theme-text-secondary: #a1a1aa;
+            --theme-glow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+        .theme-server {
+            --theme-color-primary: #2563eb;
+            --theme-color-secondary: #10b981;
+            --theme-color-accent: #f59e0b;
+            --theme-bg: #0b0f19;
+            --theme-card-bg: rgba(17, 24, 39, 0.75);
+            --theme-card-border: rgba(37, 99, 235, 0.25);
+            --theme-text-primary: #f8fafc;
+            --theme-text-secondary: #94a3b8;
+            --theme-glow: 0 0 20px rgba(37, 99, 235, 0.4);
+        }
+        .theme-project {
+            --theme-color-primary: #0d9488;
+            --theme-color-secondary: #f59e0b;
+            --theme-color-accent: #ef4444;
+            --theme-bg: #0f172a;
+            --theme-card-bg: rgba(30, 41, 59, 0.75);
+            --theme-card-border: rgba(13, 148, 136, 0.25);
+            --theme-text-primary: #f9fafb;
+            --theme-text-secondary: #94a3b8;
+            --theme-glow: 0 0 20px rgba(13, 148, 136, 0.4);
+        }
+        /* General Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+        body {
+            background-color: var(--theme-bg);
+            color: var(--theme-text-primary);
+            font-family: var(--font-body);
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        /* Subtle grid background pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        /* Navigation Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .logo {
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--theme-color-primary), var(--theme-color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--theme-glow);
+        }
+        .module-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        .module-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--theme-text-secondary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-title);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .module-btn:hover {
+            color: var(--theme-text-primary);
+            border-color: var(--theme-color-primary);
+            box-shadow: 0 0 10px rgba(var(--theme-color-primary), 0.2);
+        }
+        .module-btn.active {
+            background: linear-gradient(135deg, var(--theme-color-primary), var(--theme-color-secondary));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: var(--theme-glow);
+        }
+        /* Presentation Stage */
+        .stage {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 3rem;
+            z-index: 5;
+        }
+        .slide-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+            position: relative;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px) scale(0.98);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+        /* Cover Slide Style */
+        .slide-cover {
+            text-align: center;
+        }
+        .slide-cover h1 {
+            font-family: var(--font-title);
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, var(--theme-color-primary), var(--theme-color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(var(--theme-glow));
+        }
+        .slide-cover h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--theme-text-secondary);
+            margin-bottom: 2rem;
+        }
+        /* Card-based Content Slides */
+        .slide-content-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+        }
+        .slide-content-layout.full-width {
+            grid-template-columns: 1fr;
+            align-content: center;
+        }
+        .slide-header {
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+        .slide-header h2 {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--theme-color-primary), var(--theme-color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .slide-header .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-title);
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--theme-color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+        .glass-card {
+            background: var(--theme-card-bg);
+            border: 1px solid var(--theme-card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: var(--theme-color-primary);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 15px rgba(var(--theme-color-primary), 0.1);
+        }
+        p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--theme-text-secondary);
+            margin-bottom: 1.25rem;
+        }
+        strong {
+            color: var(--theme-text-primary);
+        }
+        ul {
+            list-style: none;
+        }
+        li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--theme-text-secondary);
+        }
+        li::before {
+            content: '➔';
+            position: absolute;
+            left: 0;
+            color: var(--theme-color-primary);
+            transition: color 0.3s ease;
+        }
+        /* Highlights */
+        .highlight-box {
+            border-left: 4px solid var(--theme-color-primary);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.25rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+        /* Interactive Element styles */
+        .interactive-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+        /* Interactive OS Comparer tabs */
+        .tabs-header {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.4rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--theme-text-secondary);
+            padding: 0.75rem;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background: var(--theme-color-primary);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(var(--theme-color-primary), 0.3);
+        }
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .pros-cons-box {
+            padding: 1.25rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .pros-cons-box.pros {
+            border-left: 4px solid #10b981;
+        }
+        .pros-cons-box.cons {
+            border-left: 4px solid #ef4444;
+        }
+        .pros-cons-box h4 {
+            font-family: var(--font-title);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .pros-cons-box.pros h4 { color: #10b981; }
+        .pros-cons-box.cons h4 { color: #ef4444; }
+        .pros-cons-box li::before {
+            content: '✓';
+            color: #10b981;
+        }
+        .pros-cons-box.cons li::before {
+            content: '✗';
+            color: #ef4444;
+        }
+        /* Budget Shopping Cart Interactive */
+        .budget-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        .budget-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .budget-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .budget-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .budget-item-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .budget-checkbox {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .budget-checkbox:checked {
+            background-color: var(--theme-color-primary);
+            border-color: var(--theme-color-primary);
+        }
+        .budget-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .budget-label {
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .budget-label span {
+            color: var(--theme-text-secondary);
+            font-size: 0.75rem;
+            display: block;
+        }
+        .budget-price {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .budget-total-box {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .total-label {
+            font-family: var(--font-title);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        .total-amount {
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--theme-color-secondary);
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+        /* Comparison Slider (IA Local vs Cloud) */
+        .slider-control-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+        .slider-label {
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        .custom-slider {
+            flex: 1;
+            margin: 0 1.5rem;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+        .custom-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--theme-color-primary);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--theme-color-primary);
+            transition: background 0.3s ease;
+        }
+        .comparison-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .comp-card {
+            padding: 1.25rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .comp-card.active {
+            border-color: var(--theme-color-primary);
+            background: rgba(var(--theme-color-primary), 0.05);
+            box-shadow: 0 0 15px rgba(var(--theme-color-primary), 0.1);
+        }
+        .comp-card h4 {
+            font-family: var(--font-title);
+            margin-bottom: 0.5rem;
+            color: var(--theme-color-secondary);
+        }
+        /* Qwen vs Llama LLM Grid */
+        .llm-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .llm-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .llm-card:hover {
+            border-color: var(--theme-color-secondary);
+            transform: translateY(-3px);
+        }
+        .llm-card.active {
+            border-color: var(--theme-color-primary);
+            background: rgba(var(--theme-color-primary), 0.05);
+            box-shadow: var(--theme-glow);
+        }
+        .llm-card .flag {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .llm-card h4 {
+            font-family: var(--font-title);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+        .llm-card .origin {
+            font-size: 0.7rem;
+            color: var(--theme-text-secondary);
+            text-transform: uppercase;
+        }
+        .llm-details-box {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.4s ease;
+        }
+        .llm-details-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .llm-details-table th, .llm-details-table td {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: left;
+        }
+        .llm-details-table th {
+            color: var(--theme-color-secondary);
+            font-family: var(--font-title);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        /* PagedAttention visualizer */
+        .vllm-simulator {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .mem-blocks-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .mem-block {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .mem-block::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .mem-block.occupied-static::after {
+            opacity: 1;
+            background: #ef4444;
+            box-shadow: inset 0 0 5px rgba(239, 68, 68, 0.5);
+        }
+        .mem-block.occupied-paged::after {
+            opacity: 1;
+            background: var(--theme-color-primary);
+            box-shadow: inset 0 0 5px rgba(var(--theme-color-primary), 0.5);
+        }
+        .mem-block.unused-paged::after {
+            opacity: 1;
+            background: #10b981;
+            box-shadow: inset 0 0 5px rgba(16, 185, 129, 0.5);
+        }
+        /* Von Neumann Diagram Interactive */
+        .von-neumann-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        .vn-diagram {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 1rem;
+            position: relative;
+        }
+        .vn-node {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.25rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-title);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        .vn-node span {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .vn-node:hover {
+            border-color: var(--theme-color-secondary);
+            transform: scale(1.03);
+        }
+        .vn-node.active {
+            border-color: var(--theme-color-primary);
+            background: rgba(var(--theme-color-primary), 0.08);
+            box-shadow: var(--theme-glow);
+        }
+        .vn-node.node-cpu {
+            grid-row: 1 / 3;
+            grid-column: 2;
+            height: 100%;
+        }
+        .vn-node.node-input {
+            grid-column: 1;
+            grid-row: 1;
+        }
+        .vn-node.node-output {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        .vn-node.node-memory {
+            grid-column: 3;
+            grid-row: 1 / 3;
+            height: 100%;
+        }
+        /* Quiz UI */
+        .quiz-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--theme-text-primary);
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            font-size: 0.95rem;
+            color: var(--theme-text-secondary);
+        }
+        .quiz-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--theme-color-secondary);
+            color: var(--theme-text-primary);
+        }
+        .quiz-option.correct {
+            background: rgba(16, 185, 129, 0.15) !important;
+            border-color: #10b981 !important;
+            color: #10b981 !important;
+        }
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #ef4444 !important;
+            color: #ef4444 !important;
+        }
+        .quiz-feedback {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            min-height: 24px;
+        }
+        /* Climate Simulator IoT Widget */
+        .climate-widget-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            align-items: stretch;
+        }
+        .climate-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .lcd-screen {
+            background: #022c22;
+            border: 6px solid #1e293b;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: var(--font-mono);
+            color: #34d399;
+            text-shadow: 0 0 8px rgba(52, 211, 153, 0.7);
+            line-height: 1.5;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .lcd-screen::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+        .rack-simulation {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            background: #0f172a;
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+        .warning-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ef4444;
+            opacity: 0.1;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            transition: all 0.3s ease;
+        }
+        .warning-light.active {
+            opacity: 1;
+            box-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444;
+            animation: pulse-red 0.8s infinite alternate;
+        }
+        .cooler-mock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .fan-svg {
+            width: 80px;
+            height: 80px;
+            fill: #64748b;
+            transition: transform 0.5s ease;
+            transform-origin: center;
+        }
+        .fan-svg.spinning {
+            animation: spin 1.5s linear infinite;
+        }
+        .fan-svg.spinning-fast {
+            animation: spin 0.4s linear infinite;
+            fill: var(--theme-color-primary);
+        }
+        .cooler-label {
+            font-size: 0.75rem;
+            font-family: var(--font-title);
+            color: var(--theme-text-secondary);
+        }
+        .logs-window {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: #a7f3d0;
+            height: 100px;
+            overflow-y: auto;
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .logs-window::-webkit-scrollbar {
+            width: 4px;
+        }
+        .logs-window::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        /* Mock Smartphone Notification */
+        .mobile-notification-container {
+            position: absolute;
+            bottom: 4rem;
+            right: 3rem;
+            width: 320px;
+            z-index: 100;
+            pointer-events: none;
+        }
+        .mobile-notification {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 5px solid #f59e0b;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            transform: translateX(350px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
+        }
+        .mobile-notification.show {
+            transform: translateX(0);
+        }
+        .notif-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--theme-text-secondary);
+            margin-bottom: 0.25rem;
+            font-family: var(--font-title);
+            font-weight: 700;
+        }
+        .notif-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--theme-text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .notif-body {
+            font-size: 0.8rem;
+            color: var(--theme-text-secondary);
+            line-height: 1.4;
+        }
+        /* Presentation Controls (Footer) */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--theme-text-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: var(--theme-color-primary);
+            border-color: transparent;
+            box-shadow: 0 0 10px rgba(var(--theme-color-primary), 0.3);
+            transform: scale(1.05);
+        }
+        .slide-dots {
+            display: flex;
+            gap: 0.6rem;
+        }
+        .slide-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .slide-dot.active {
+            background: var(--theme-color-primary);
+            transform: scale(1.3);
+            box-shadow: 0 0 8px var(--theme-color-primary);
+        }
+        .slide-dot:hover::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #18181b;
+            color: #fff;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-family: var(--font-title);
+            font-weight: 700;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 100;
+            pointer-events: none;
+        }
+        .progress-bar-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 20;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--theme-color-primary), var(--theme-color-secondary));
+            box-shadow: 0 0 10px rgba(var(--theme-color-primary), 0.5);
+            transition: width 0.3s ease;
+        }
+        .slide-counter {
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--theme-text-secondary);
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse-red {
+            from { background-color: rgba(239, 68, 68, 0.2); }
+            to { background-color: rgba(239, 68, 68, 1); }
+        }
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .slide-content-layout {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                overflow-y: auto;
+                height: 100%;
+                padding-right: 0.5rem;
+            }
+            .slide-content-layout::-webkit-scrollbar {
+                width: 4px;
+            }
+            body {
+                overflow: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+            .stage {
+                padding: 1.5rem 1rem;
+                height: auto;
+                min-height: 70vh;
+            }
+            header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            footer {
+                padding: 1rem;
+                flex-direction: column-reverse;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="theme-gamer">
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <!-- Header -->
+    <header>
+        <div class="logo">AGY PRESENTATION</div>
+        <nav class="module-nav">
+            <button class="module-btn active" onclick="jumpToModule('gamer')">🎮 PC Gamer</button>
+            <button class="module-btn" onclick="jumpToModule('server')">🖥️ Servidor de IA</button>
+            <button class="module-btn" onclick="jumpToModule('project')">🔌 Projeto Clima IoT</button>
+        </nav>
+    </header>
+    <!-- Presentation Stage -->
+    <main class="stage">
+        <div class="slide-container">
+            <!-- ==================== MODULE 1: PC GAMER ==================== -->
+            <!-- Slide 1: Cover M1 -->
+            <div class="slide active" data-module="gamer" data-index="1" data-title="Capa PC Gamer">
+                <div class="slide-cover">
+                    <div class="tag" style="color: var(--theme-color-primary)">Módulo 01</div>
+                    <h1>PC GAMER</h1>
+                    <h2>Desempenho Extremo & Compatibilidade Universal</h2>
+                    <p style="max-width: 600px; margin: 0 auto 2rem;">A análise técnica do build definitivo para jogos, APIs gráficas avançadas e a decisão cirúrgica de sistema operacional.</p>
+                </div>
+            </div>
+            <!-- Slide 2: SO Recomendado -->
+            <div class="slide" data-module="gamer" data-index="2" data-title="SO Recomendado">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Decisão Técnica</div>
+                        <h2>O Sistema Operacional Recomendado</h2>
+                        <p style="margin-top: 1rem;">A equipe recomenda o <strong>Microsoft Windows 11</strong> para este build de PC Gamer de alto desempenho.</p>
+                        
+                        <div class="highlight-box">
+                            <p>"A escolha do SO não se baseia apenas no gosto, mas na sustentação técnica das capacidades físicas do hardware montado."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Três Pilares de Escolha</h3>
+                        <ul style="margin-top: 1rem;">
+                            <li><strong>Compatibilidade Universal:</strong> Execução nativa de praticamente todos os jogos do mercado sem necessidade de tradução de código ou APIs.</li>
+                            <li><strong>DirectX 12 Ultimate:</strong> Suporte nativo à API gráfica da Microsoft, permitindo recursos avançados como Ray Tracing e DirectStorage.</li>
+                            <li><strong>Integração de Hardware:</strong> Drivers de GPU refinados instantaneamente e calibração fina de tecnologias como NVIDIA G-Sync e HDR.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 3: Comparação de SOs (Interactive) -->
+            <div class="slide" data-module="gamer" data-index="3" data-title="Comparador de SOs">
+                <div class="slide-content-layout full-width">
+                    <div class="slide-header">
+                        <div class="tag">Interativo</div>
+                        <h2>Comparativo de Sistemas para Jogos</h2>
+                        <p>Explore as vantagens e desvantagens de cada sistema operacional na atualidade gamer.</p>
+                    </div>
+                    
+                    <div class="glass-card interactive-section">
+                        <div class="tabs-header">
+                            <button class="tab-btn active" onclick="switchGamerOSTab(this, 'win-pane')">Windows 11</button>
+                            <button class="tab-btn" onclick="switchGamerOSTab(this, 'lin-pane')">Linux (SteamOS/Proton)</button>
+                            <button class="tab-btn" onclick="switchGamerOSTab(this, 'mac-pane')">macOS (Metal/M-Chips)</button>
+                        </div>
+                        <!-- Tab Content Windows -->
+                        <div class="tab-pane active" id="win-pane">
+                            <div class="pros-cons">
+                                <div class="pros-cons-box pros">
+                                    <h4>Vantagens</h4>
+                                    <ul>
+                                        <li>Suporte completo a 99.9% da biblioteca de jogos PC.</li>
+                                        <li>Integração perfeita com drivers AMD/NVIDIA/Intel.</li>
+                                        <li>Tecnologias nativas como Auto HDR e DirectStorage.</li>
+                                    </ul>
+                                </div>
+                                <div class="pros-cons-box cons">
+                                    <h4>Desvantagens</h4>
+                                    <ul>
+                                        <li>Alto consumo de RAM e CPU em segundo plano.</li>
+                                        <li>Telemetria e anúncios integrados no sistema.</li>
+                                        <li>Atualizações forçadas que podem perturbar sessões.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Content Linux -->
+                        <div class="tab-pane" id="lin-pane">
+                            <div class="pros-cons">
+                                <div class="pros-cons-box pros">
+                                    <h4>Vantagens</h4>
+                                    <ul>
+                                        <li>Extremamente leve e consumo mínimo de hardware.</li>
+                                        <li>Privacidade total e controle absoluto dos processos.</li>
+                                        <li>Proton (Valve) roda milhares de jogos Windows perfeitamente.</li>
+                                    </ul>
+                                </div>
+                                <div class="pros-cons-box cons">
+                                    <h4>Desvantagens</h4>
+                                    <ul>
+                                        <li>Anti-cheats a nível de Kernel (Valorant, Fortnite) não rodam.</li>
+                                        <li>Pode exigir soluções manuais por linha de comando.</li>
+                                        <li>Drivers NVIDIA têm instalação e suporte mais complicados.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Content macOS -->
+                        <div class="tab-pane" id="mac-pane">
+                            <div class="pros-cons">
+                                <div class="pros-cons-box pros">
+                                    <h4>Vantagens</h4>
+                                    <ul>
+                                        <li>Excelente eficiência nos chips M1/M2/M3.</li>
+                                        <li>Estabilidade notável e segurança do ecossistema Apple.</li>
+                                        <li>Game Porting Toolkit melhorou a portabilidade de títulos.</li>
+                                    </ul>
+                                </div>
+                                <div class="pros-cons-box cons">
+                                    <h4>Desvantagens</h4>
+                                    <ul>
+                                        <li>Catálogo de jogos nativos extremamente reduzido.</li>
+                                        <li>Zero upgrade físico de GPU ou hardware interno.</li>
+                                        <li>API Metal proprietária gera barreira de portabilidade.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 4: APIs Gráficas -->
+            <div class="slide" data-module="gamer" data-index="4" data-title="APIs Gráficas">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Arquitetura de Software</div>
+                        <h2>A Batalha das APIs Gráficas</h2>
+                        <p style="margin-top: 1rem;">As APIs agem como pontes de comunicação direta entre o código do jogo e a GPU do computador.</p>
+                        <p><strong>DirectX 12 Ultimate:</strong> O ecossistema padrão da indústria. Oferece Ray Tracing (DXR), Mesh Shaders, Sampler Feedback e Variable Rate Shading de forma coesa e unificada para o Windows e Xbox.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Comparativo Técnico de APIs</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--theme-color-secondary);">
+                                    <th style="padding: 0.75rem 0; text-align: left;">Recurso</th>
+                                    <th style="padding: 0.75rem; text-align: center;">DX12 Ultimate</th>
+                                    <th style="padding: 0.75rem; text-align: center;">Vulkan</th>
+                                    <th style="padding: 0.75rem; text-align: center;">Metal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.75rem 0;">Plataformas</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #10b981;">Win/Xbox</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #10b981;">Universal</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #ef4444;">Apple Apenas</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.75rem 0;">Acesso ao Hardware</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #10b981;">Muito Baixo</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #10b981;">Muito Baixo</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f59e0b;">Médio/Baixo</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.75rem 0;">Suporte Ray Tracing</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #10b981;">Nativo (DXR)</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #10b981;">Extensões</td>
+                                    <td style="padding: 0.75rem; text-align: center; color: #f59e0b;">M-Chips Recentes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 5: Orçamento & Checklist (Interactive) -->
+            <div class="slide" data-module="gamer" data-index="5" data-title="Hardware & Orçamento">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Configuração</div>
+                        <h2>O Hardware Recomendado</h2>
+                        <p style="margin-top: 1rem; font-size: 0.95rem;">Composição cirúrgica focada em rodar jogos em 1440p (QHD) com alta taxa de quadros e excelente eficiência energética global.</p>
+                        <div class="highlight-box" style="margin: 1rem 0 0 0;">
+                            <p style="font-size: 0.85rem;"><strong>Destaque do Build:</strong> A GeForce RTX 5060 de 8GB GDDR7 combinada ao Intel Core i5-14600KF entrega um poder massivo de processamento sem gerar picos térmicos no gabinete.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card interactive-section">
+                        <h3>Simulador de Custo do Build</h3>
+                        <p style="font-size: 0.8rem; margin-bottom: 0.5rem;">Desmarque itens para ver o impacto no orçamento:</p>
+                        
+                        <div class="budget-list" id="gamerBudgetList">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                        
+                        <div class="budget-total-box">
+                            <span class="total-label">Custo Total:</span>
+                            <span class="total-amount" id="gamerTotalCost">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 6: Quiz (Interactive) -->
+            <div class="slide" data-module="gamer" data-index="6" data-title="Quiz Gamer">
+                <div class="slide-content-layout full-width">
+                    <div class="slide-header" style="text-align: center;">
+                        <div class="tag">Interativo</div>
+                        <h2>Desafio Técnico do Módulo</h2>
+                        <p>Teste seus conhecimentos sobre o ecossistema PC Gamer.</p>
+                    </div>
+                    <div class="glass-card quiz-container" style="max-width: 600px; margin: 0 auto; width: 100%;">
+                        <div class="quiz-question" id="gamerQuizQuestion">Carregando pergunta...</div>
+                        <div class="quiz-options" id="gamerQuizOptions">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="quiz-feedback" id="gamerQuizFeedback" style="color: var(--theme-color-secondary); text-align: center;"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ==================== MODULE 2: SERVIDOR DE IA ==================== -->
+            <!-- Slide 7: Cover M2 -->
+            <div class="slide" data-module="server" data-index="1" data-title="Capa Servidor">
+                <div class="slide-cover">
+                    <div class="tag" style="color: var(--theme-color-primary)">Módulo 02</div>
+                    <h1>SERVIDOR DE IA</h1>
+                    <h2>Confiabilidade, Eficiência e Soberania de Dados</h2>
+                    <p style="max-width: 600px; margin: 0 auto 2rem;">IA Local corporativa com o Dell PowerEdge R360 e GPU NVIDIA RTX A4000 de 16GB, atendendo 20 usuários na rede local.</p>
+                </div>
+            </div>
+            <!-- Slide 8: Combinação Estratégica -->
+            <div class="slide" data-module="server" data-index="2" data-title="Arquitetura do Servidor">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Hardware Corporativo</div>
+                        <h2>O Equilíbrio do PowerEdge R360 + RTX A4000</h2>
+                        <p style="margin-top: 1rem; font-size: 0.95rem;">União da robustez do chassi de rack Dell à alta performance energética da RTX A4000 de 16GB de VRAM.</p>
+                        <ul>
+                            <li><strong>Fontes Titanium 80 Plus:</strong> Eficiência superior a 94%, gerando baixíssimo calor na sala de servidores.</li>
+                            <li><strong>TDP Máximo de 140W:</strong> A RTX A4000 consome menos de 1/3 do que gastaria uma placa equivalente de desktop gamer.</li>
+                            <li><strong>Consumo Fixo Frugal:</strong> Média de 300W sob carga de inferência, resultando em um custo de luz estimado de menos de <strong>R$ 200,00 por mês</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Investimento e Orçamento</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem;">
+                            <tbody>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.6rem 0;">Dell PowerEdge R360 (Xeon)</td>
+                                    <td style="padding: 0.6rem; text-align: right; font-family: var(--font-mono);">R$ 35.442,45</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.6rem 0;">NVIDIA Quadro RTX A4000 16GB</td>
+                                    <td style="padding: 0.6rem; text-align: right; font-family: var(--font-mono);">R$ 9.930,14</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.6rem 0;">Expansão +32GB RAM ECC (Total 48GB)</td>
+                                    <td style="padding: 0.6rem; text-align: right; font-family: var(--font-mono);">R$ 1.850,00</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding: 0.6rem 0;">Armazenamento SSD SATA</td>
+                                    <td style="padding: 0.6rem; text-align: right; font-family: var(--font-mono);">R$ 0,00 (Incluso)</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0; font-weight: bold; color: var(--theme-color-secondary);">Total do Hardware</td>
+                                    <td style="padding: 0.6rem; text-align: right; font-weight: bold; color: var(--theme-color-secondary); font-family: var(--font-mono);">R$ 47.222,59</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="highlight-box" style="margin-top: 1rem; padding: 0.75rem;">
+                            <p style="font-size: 0.8rem; margin: 0;">Enquadra-se perfeitamente no teto orçamentário definido de <strong>R$ 50.000,00</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 9: Local vs Nuvem (Interactive) -->
+            <div class="slide" data-module="server" data-index="3" data-title="Local vs Nuvem">
+                <div class="slide-content-layout full-width">
+                    <div class="slide-header">
+                        <div class="tag">Interativo</div>
+                        <h2>Diferenças Críticas: Execução Local vs Nuvem</h2>
+                        <p>Ajuste o controle para entender as prioridades estratégicas de cada infraestrutura.</p>
+                    </div>
+                    <div class="glass-card interactive-section">
+                        <div class="slider-control-box">
+                            <span class="slider-label" style="color: #ef4444;">Foco em Nuvem (OpEx)</span>
+                            <input type="range" min="0" max="100" value="100" class="custom-slider" id="localCloudSlider" oninput="updateLocalCloudSim()">
+                            <span class="slider-label" style="color: #10b981;">Foco em Local (CapEx)</span>
+                        </div>
+                        <div class="comparison-cards-grid">
+                            <div class="comp-card" id="cardCloud">
+                                <h4>Nuvem (APIs Externas)</h4>
+                                <ul>
+                                    <li id="cloud1">Segurança de Dados: Código-fonte enviado a servidores terceiros.</li>
+                                    <li id="cloud2">Custo Mensal: Variável, cobrado por token (alto tráfego = custos imprevisíveis).</li>
+                                    <li id="cloud3">Latência: Depende de conexões de internet externas e filas das APIs.</li>
+                                    <li id="cloud4">Infraestrutura: Simples inicialização, manutenção terceirizada.</li>
+                                </ul>
+                            </div>
+                            <div class="comp-card" id="cardLocal">
+                                <h4>Local (Soberania Própria)</h4>
+                                <ul>
+                                    <li id="local1">Soberania absoluta dos dados corporativos (sem tráfego de internet).</li>
+                                    <li id="local2">Custo totalmente previsível (apenas infraestrutura e energia fixa).</li>
+                                    <li id="local3">Latência ultrabaixa via rede de dados interna (LAN).</li>
+                                    <li id="local4">Manutenção, controle e atualizações sob responsabilidade da TI interna.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 10: Modelos de LLM (Interactive) -->
+            <div class="slide" data-module="server" data-index="4" data-title="Comparador de LLMs">
+                <div class="slide-content-layout full-width">
+                    <div class="slide-header">
+                        <div class="tag">Interativo</div>
+                        <h2>Comparativo de Modelos LLM Locais</h2>
+                        <p>Analise modelos americanos e chineses especializados em programação para rodar na GPU RTX A4000 (16GB VRAM).</p>
+                    </div>
+                    <div class="glass-card interactive-section">
+                        <div class="llm-grid">
+                            <button class="llm-card active" onclick="selectLLM('qwen')">
+                                <span class="flag">🇨🇳</span>
+                                <h4>Qwen 2.5 Coder</h4>
+                                <span class="origin">Alibaba</span>
+                            </button>
+                            <button class="llm-card" onclick="selectLLM('deepseek')">
+                                <span class="flag">🇨🇳</span>
+                                <h4>DeepSeek Coder</h4>
+                                <span class="origin">DeepSeek</span>
+                            </button>
+                            <button class="llm-card" onclick="selectLLM('llama')">
+                                <span class="flag">🇺🇸</span>
+                                <h4>Llama 3.1 Coder</h4>
+                                <span class="origin">Meta</span>
+                            </button>
+                            <button class="llm-card" onclick="selectLLM('phi')">
+                                <span class="flag">🇺🇸</span>
+                                <h4>Phi-3 Medium</h4>
+                                <span class="origin">Microsoft</span>
+                            </button>
+                        </div>
+                        <div class="llm-details-box" id="llmDetailsBox">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 11: vLLM e PagedAttention (Interactive) -->
+            <div class="slide" data-module="server" data-index="5" data-title="vLLM & PagedAttention">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Motor de Inferência</div>
+                        <h2>Por que escolher o vLLM?</h2>
+                        <p style="margin-top: 1rem;">Gerenciar 20 desenvolvedores simultâneos em uma única GPU exige otimização profunda de VRAM.</p>
+                        <p>O <strong>vLLM</strong> utiliza <strong>PagedAttention</strong> para alocar memória de chaves/valores de forma dinâmica, evitando a fragmentação física. Isso reduz drasticamente o desperdício de VRAM em relação a motores simples (como Ollama ou LM Studio), permitindo paralelizar requisições.</p>
+                    </div>
+                    
+                    <div class="glass-card interactive-section">
+                        <h3>Simulador de Alocação de Memória</h3>
+                        <p style="font-size: 0.8rem; margin-bottom: 0.5rem;">Aumente o número de usuários ativos:</p>
+                        <div class="slider-control-box">
+                            <span class="slider-label">Usuários: <span id="userCountLabel" style="color: var(--theme-color-secondary)">1</span></span>
+                            <input type="range" min="1" max="25" value="1" class="custom-slider" id="vllmUserSlider" oninput="updateVllmSim()">
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.5rem;">
+                            <span>Mapa de Blocos de VRAM (RTX A4000 16GB)</span>
+                            <span id="vllmVramStatus" style="font-family: var(--font-mono)">Uso: 1.5 GB / 16 GB</span>
+                        </div>
+                        <div class="mem-blocks-container" id="vllmMemBlocks">
+                            <!-- 32 blocks generated by JS -->
+                        </div>
+                        <div style="display: flex; gap: 1rem; font-size: 0.7rem; margin-top: 0.5rem;">
+                            <span style="display:flex; align-items:center; gap: 4px;"><span style="width:10px; height:10px; background:#2563eb; display:inline-block; border-radius:2px;"></span>vLLM Paged</span>
+                            <span style="display:flex; align-items:center; gap: 4px;"><span style="width:10px; height:10px; background:#10b981; display:inline-block; border-radius:2px;"></span>Livre</span>
+                            <span style="display:flex; align-items:center; gap: 4px;"><span style="width:10px; height:10px; background:#ef4444; display:inline-block; border-radius:2px;"></span>Perda Estática (Ollama)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 12: Dimensionamento de Rede -->
+            <div class="slide" data-module="server" data-index="6" data-title="Infraestrutura de Rede">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Tráfego de Rede</div>
+                        <h2>Dimensionamento e Banda de Rede</h2>
+                        <p style="margin-top: 1rem;">Para a operação de 20 usuários locais e a rotina de 200 funcionários externos, dividimos a rede de forma isolada:</p>
+                        
+                        <div class="highlight-box" style="margin: 1rem 0;">
+                            <p style="font-size: 0.85rem;"><strong>Tráfego da IA Local:</strong> Ocorre inteiramente dentro da <strong>Rede Local (LAN)</strong>. Não consome banda de internet externa.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Requisitos e Investimento</h3>
+                        <ul style="font-size: 0.95rem;">
+                            <li><strong>Rede Local (LAN):</strong> Gigabit Ethernet (Mínimo de 1 Gbps). Garante a transferência ultrarápida de pacotes de texto/tokens sem latência física.</li>
+                            <li><strong>Banda Externa (WAN):</strong> Link Dedicado de <strong>100 Mbps Simétrico</strong>. Atende com segurança o desenvolvimento geral (Git, videoconferência, deploys na nuvem) dos 200 funcionários.</li>
+                            <li><strong>Investimento Mensal:</strong> Plano corporativo estimado em <strong>R$ 1.500,00 a R$ 1.683,60 / mês</strong> com garantia de SLA.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- ==================== MODULE 3: PROJETO CLIMA IOT ==================== -->
+            <!-- Slide 13: Cover M3 -->
+            <div class="slide" data-module="project" data-index="1" data-title="Capa Projeto">
+                <div class="slide-cover">
+                    <div class="tag" style="color: var(--theme-color-primary)">Módulo 03</div>
+                    <h1>PROJETO DE CLIMA IOT</h1>
+                    <h2>Controlador Automatizado de Rack de Servidores</h2>
+                    <p style="max-width: 600px; margin: 0 auto 2rem;">Desenvolvimento de um sistema inteligente modular de controle dinâmico de temperatura e umidade com base em Raspberry Pi 4.</p>
+                </div>
+            </div>
+            <!-- Slide 14: Arquitetura Von Neumann (Interactive) -->
+            <div class="slide" data-module="project" data-index="2" data-title="Arquitetura de Hardware">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Mapeamento Teórico</div>
+                        <h2>A Arquitetura de Von Neumann no IoT</h2>
+                        <p style="margin-top: 1rem; font-size: 0.95rem;">A arquitetura clássica é dividida em CPU, Memória, Entrada e Saída. Clique nos componentes do diagrama ao lado para ler seu mapeamento no projeto físico.</p>
+                        
+                        <div class="highlight-box" style="margin-top: 1.5rem; min-height: 120px;" id="vnDescriptionBox">
+                            <p style="font-size: 0.9rem; font-weight: bold; color: var(--theme-color-secondary);" id="vnTitle">Selecione um bloco no diagrama</p>
+                            <p style="font-size: 0.85rem; margin-top: 0.25rem;" id="vnDesc">Clique em qualquer bloco do diagrama para ver como o controlador de clima se encaixa na arquitetura.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card interactive-section">
+                        <div class="vn-diagram">
+                            <div class="vn-node node-input" onclick="selectVNNode('input')">
+                                <span>📥</span>Entrada (DHT22)
+                            </div>
+                            <div class="vn-node node-cpu" onclick="selectVNNode('cpu')">
+                                <span>🧠</span>CPU / Processador
+                            </div>
+                            <div class="vn-node node-memory" onclick="selectVNNode('memory')">
+                                <span>💾</span>Memória (RAM/SD)
+                            </div>
+                            <div class="vn-node node-output" onclick="selectVNNode('output')">
+                                <span>📤</span>Saída (Relé/LCD)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 15: Orçamento de Componentes -->
+            <div class="slide" data-module="project" data-index="3" data-title="Componentes & Orçamento">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Componentes</div>
+                        <h2>Orçamento e Especificações do IoT</h2>
+                        <p style="margin-top: 1rem; font-size: 0.95rem;">Protótipo modular de custo extremamente acessível em comparação a painéis proprietários industriais de controle térmico de rack.</p>
+                        <p>O custo acumulado total de todas as peças soma <strong>R$ 1.589,51</strong>, garantindo alta viabilidade econômica e rápida prototipagem.</p>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem;">
+                        <div class="budget-list" style="max-height: 300px;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--theme-color-secondary);">
+                                        <th style="padding: 0.5rem 0; text-align: left;">Componente</th>
+                                        <th style="padding: 0.5rem; text-align: center;">Qtd</th>
+                                        <th style="padding: 0.5rem; text-align: right;">Preço</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Raspberry Pi 4 Model B</td>
+                                        <td style="padding: 0.5rem; text-align: center;">1</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 1.350,00</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Sensor Temp/Umid DHT22</td>
+                                        <td style="padding: 0.5rem; text-align: center;">1</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 26,60</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Cooler Fan 12V</td>
+                                        <td style="padding: 0.5rem; text-align: center;">2</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 22,18</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Módulo Relé 2 Canais</td>
+                                        <td style="padding: 0.5rem; text-align: center;">1</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 19,00</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Fontes de Alimentação (5V e 12V)</td>
+                                        <td style="padding: 0.5rem; text-align: center;">2</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 53,78</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Cartão MicroSD 32GB</td>
+                                        <td style="padding: 0.5rem; text-align: center;">1</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 79,95</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Cabos Jumper + Protoboard</td>
+                                        <td style="padding: 0.5rem; text-align: center;">41</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 38,00</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 0.5rem 0;">Display LCD 2004 Backlight</td>
+                                        <td style="padding: 0.5rem; text-align: center;">1</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 39,00</td>
+                                    </tr>
+                                    <tr style="font-weight: bold; color: var(--theme-color-secondary);">
+                                        <td style="padding: 0.5rem 0;">Soma Geral</td>
+                                        <td style="padding: 0.5rem; text-align: center;">-</td>
+                                        <td style="padding: 0.5rem; text-align: right; font-family: var(--font-mono);">R$ 1.589,51</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 16: Lógica de Operação -->
+            <div class="slide" data-module="project" data-index="4" data-title="Lógica & Operação">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Fluxograma</div>
+                        <h2>Lógica de Decisão do Clima</h2>
+                        <p style="margin-top: 1rem;">O script opera em loop contínuo (leituras de 10 a 30s para resguardar a integridade física dos sensores e relés):</p>
+                        
+                        <div style="font-family: var(--font-title); font-size: 0.8rem; letter-spacing: 1px; color: var(--theme-color-secondary); margin-top: 1rem; text-align: center;">
+                            [Início] ➔ [Leitura Sensor] ➔ [Análise Limites] ➔ [Decisão Atuação] ➔ [Banco & Logs] ↺ Repete
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Estados Climáticos de Atuação</h3>
+                        <ul style="font-size: 0.95rem; margin-top: 1rem;">
+                            <li><strong>Abaixo de 30°C:</strong> Sistema em standby. Coolers desligados ou na velocidade mínima (economia de energia).</li>
+                            <li><strong>Entre 30°C e 40°C:</strong> O Pi aciona o Módulo Relé 1, ativando os exaustores em potência regular.</li>
+                            <li><strong>Acima de 40°C (Emergência):</strong> Aciona o Relé 2 de exaustão secundária/emergência em rotação máxima e dispara alerta imediato de TI.</li>
+                            <li><strong>Banco de dados:</strong> Cada ciclo insere dados históricos contendo: <code>[Data/Hora, Temp, Umid, Status_Cooler]</code>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 17: Desenvolvimento em Python -->
+            <div class="slide" data-module="project" data-index="5" data-title="Script Python">
+                <div class="slide-content-layout">
+                    <div class="glass-card">
+                        <div class="tag">Linguagem Escolhida</div>
+                        <h2>Por que usar Python?</h2>
+                        <p style="margin-top: 1rem;">Python é a linguagem ideal para esta infraestrutura IoT devido a:</p>
+                        <ul>
+                            <li><strong>Suporte Nativo:</strong> Bibliotecas altamente maduras para controle direto de pinos (<code>RPi.GPIO</code> ou <code>gpiozero</code>).</li>
+                            <li><strong>DHT22 Estável:</strong> Acesso direto aos dados do sensor via biblioteca da <code>Adafruit_DHT</code>.</li>
+                            <li><strong>Armazenamento Leve:</strong> Manipulação de banco de dados nativo (<code>sqlite3</code>) com pouquíssimas linhas de código.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card" style="padding: 1rem;">
+                        <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Visão do Código de Controle</h3>
+                        <pre style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.75rem; overflow-x: auto; color: #a7f3d0; border: 1px solid rgba(255,255,255,0.05);">
+import RPi.GPIO as GPIO
+import Adafruit_DHT
+import sqlite3
+# Configurações do Sensor e Pinos
+sensor = Adafruit_DHT.DHT22
+pin_sensor = 4
+rele_1 = 17 # Coolers Normais
+rele_2 = 27 # Emergência
+def analisar_clima(temp, umid):
+    if temp > 40:
+        GPIO.output(rele_1, True)
+        GPIO.output(rele_2, True) # Potência Máxima!
+        disparar_alerta_telegram(temp)
+    elif temp >= 30:
+        GPIO.output(rele_1, True)
+        GPIO.output(rele_2, False)
+    else:
+        GPIO.output(rele_1, False)
+        GPIO.output(rele_2, False)</pre>
+                    </div>
+                </div>
+            </div>
+            <!-- Slide 18: Simulador Climático (Interactive) -->
+            <div class="slide" data-module="project" data-index="6" data-title="Simulador IoT">
+                <div class="slide-content-layout full-width">
+                    <div class="slide-header">
+                        <div class="tag">Simulador Interativo</div>
+                        <h2>O Diferencial Inovador e Prático</h2>
+                        <p>Simule o controle inteligente ajustando as condições ambientais abaixo.</p>
+                    </div>
+                    <div class="glass-card interactive-section">
+                        <div class="climate-widget-grid">
+                            
+                            <!-- Controls and LCD Mockup -->
+                            <div class="climate-controls">
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:0.9rem; font-weight:bold;">Ajustar Temperatura (°C)</span>
+                                    <span id="sliderTempLabel" style="font-family:var(--font-mono); font-weight:700; color:var(--theme-color-secondary)">25.0°C</span>
+                                </div>
+                                <input type="range" min="15.0" max="55.0" step="0.5" value="25.0" class="custom-slider" id="simTempSlider" oninput="updateClimateSim()">
+                                
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-size:0.9rem; font-weight:bold;">Ajustar Umidade (%)</span>
+                                    <span id="sliderUmidLabel" style="font-family:var(--font-mono); font-weight:700; color:var(--theme-color-secondary)">50%</span>
+                                </div>
+                                <input type="range" min="20" max="90" value="50" class="custom-slider" id="simUmidSlider" oninput="updateClimateSim()">
+                                
+                                <div class="lcd-screen" id="lcdDisplay">
+                                    T: 25.0 C  H: 50%<br>
+                                    STATUS: STANDBY<br>
+                                    COOLERS: DESLIGADOS
+                                </div>
+                            </div>
+                            <!-- Coolers Mockup & Database Logs -->
+                            <div>
+                                <div class="rack-simulation">
+                                    <div class="warning-light" id="warningLight"></div>
+                                    <div class="cooler-mock">
+                                        <svg class="fan-svg" id="cooler1" viewBox="0 0 24 24">
+                                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M12,6C13.1,6 14,6.9 14,8C14,9.66 11,10.66 11,11C10.66,11 9.66,14 8,14C6.9,14 6,13.1 6,12C6,10.9 6.9,10 8,10C8.5,10 9.2,10.4 10,11C10.8,11.6 11.4,12 12,12C12.6,12 13.2,11.6 14,11C14.8,10.4 15.5,10 16,10C17.1,10 18,10.9 18,12C18,13.1 17.1,14 16,14C14.34,14 13.34,11 13,11C12.66,11 11.66,8 10,8C10.5,8 11.2,8.4 12,9C12.8,9.6 13.4,10 14,10Z"/>
+                                        </svg>
+                                        <span class="cooler-label">Exaustor Primário</span>
+                                    </div>
+                                    <div class="cooler-mock">
+                                        <svg class="fan-svg" id="cooler2" viewBox="0 0 24 24">
+                                            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10M12,6C13.1,6 14,6.9 14,8C14,9.66 11,10.66 11,11C10.66,11 9.66,14 8,14C6.9,14 6,13.1 6,12C6,10.9 6.9,10 8,10C8.5,10 9.2,10.4 10,11C10.8,11.6 11.4,12 12,12C12.6,12 13.2,11.6 14,11C14.8,10.4 15.5,10 16,10C17.1,10 18,10.9 18,12C18,13.1 17.1,14 16,14C14.34,14 13.34,11 13,11C12.66,11 11.66,8 10,8C10.5,8 11.2,8.4 12,9C12.8,9.6 13.4,10 14,10Z"/>
+                                        </svg>
+                                        <span class="cooler-label">Exaustor de Emergência</span>
+                                    </div>
+                                </div>
+                                <div class="logs-window" id="logsWindow">
+                                    <div>[INICIALIZAÇÃO] Sistema operacional ativo...</div>
+                                    <div>[SQLITE] Conexão estabelecida com sucesso.</div>
+                                    <div>[STATUS] Aguardando leituras do sensor...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Smartphone Fictitious Notification Container -->
+    <div class="mobile-notification-container">
+        <div class="mobile-notification" id="alertNotif">
+            <div class="notif-header">
+                <span>RACK MONITOR</span>
+                <span>AGORA</span>
+            </div>
+            <div class="notif-title">⚠️ Temperatura Crítica!</div>
+            <div class="notif-body" id="alertNotifBody">A temperatura excedeu 40°C. Resfriamento ativado.</div>
+        </div>
+    </div>
+    <!-- Footer Controls -->
+    <footer>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 18</div>
+        <div class="slide-dots" id="slideDots">
+            <!-- Dots generated by JS -->
+        </div>
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="prevSlide()">◀</button>
+            <button class="nav-btn" onclick="nextSlide()">▶</button>
+        </div>
+    </footer>
+    <!-- JavaScript Presentation logic -->
+    <script>
+        // Slides Configuration
+        const slides = [
+            { module: 'gamer', index: 1, title: 'Capa PC Gamer' },
+            { module: 'gamer', index: 2, title: 'Recomendação SO' },
+            { module: 'gamer', index: 3, title: 'Comparador de SOs' },
+            { module: 'gamer', index: 4, title: 'APIs Gráficas' },
+            { module: 'gamer', index: 5, title: 'Hardware & Orçamento' },
+            { module: 'gamer', index: 6, title: 'Quiz Gamer' },
+            
+            { module: 'server', index: 1, title: 'Capa Servidor' },
+            { module: 'server', index: 2, title: 'Combinação Estratégica' },
+            { module: 'server', index: 3, title: 'IA Local vs Nuvem' },
+            { module: 'server', index: 4, title: 'Comparativo de LLMs' },
+            { module: 'server', index: 5, title: 'vLLM & PagedAttention' },
+            { module: 'server', index: 6, title: 'Dimensionamento de Rede' },
+            
+            { module: 'project', index: 1, title: 'Capa Projeto' },
+            { module: 'project', index: 2, title: 'Von Neumann no IoT' },
+            { module: 'project', index: 3, title: 'Componentes & Preços' },
+            { module: 'project', index: 4, title: 'Lógica do Controlador' },
+            { module: 'project', index: 5, title: 'Script Python' },
+            { module: 'project', index: 6, title: 'Simulador Climático' }
+        ];
+        let currentSlideIndex = 0;
+        // Gamer Budget Checklist
+        const gamerHardware = [
+            { id: 'cpu', name: 'Intel Core i5-14600KF', detail: '14-Core, 20-Threads, Turbo 5.3GHz', price: 1479.99, checked: true },
+            { id: 'gpu', name: 'MSI GeForce RTX 5060 Shadow 2X OC', detail: '8GB GDDR7, 128-bit', price: 2298.99, checked: true },
+            { id: 'mobo', name: 'MSI Pro B760M-E DDR4', detail: 'Socket LGA 1700, Micro ATX', price: 599.99, checked: true },
+            { id: 'ram', name: 'Adata XPG Spectrix D35G RGB 16GB', detail: '1x16GB, DDR4 3200MHz', price: 1797.98, checked: true },
+            { id: 'ssd', name: 'Kingston NV3 1TB M.2 PCIe NVMe', detail: 'Leitura 6000MB/s', price: 999.99, checked: true },
+            { id: 'psu', name: 'Corsair CX750 750W', detail: '80 Plus Bronze', price: 389.99, checked: true },
+            { id: 'case', name: 'Gabinete Mancer Narok V2', detail: 'Mid-Tower, Lateral de Vidro', price: 129.99, checked: true },
+            { id: 'cooler', name: 'DeepCool AK400 120mm', detail: 'Air Cooler de alta performance', price: 139.99, checked: true },
+            { id: 'monitor', name: 'Gamer AOC Agon Quad 32', detail: 'Curvo QHD, 180Hz, 0.5ms', price: 1299.99, checked: true },
+            { id: 'keyboard', name: 'Mecânico Marvo Titan 65 RGB', detail: 'Wireless, Switch Banana', price: 189.99, checked: true },
+            { id: 'mouse', name: 'Marvo Niro 50 12000DPI', detail: '6 Botões, Wireless', price: 99.99, checked: true },
+            { id: 'os', name: 'Licença Microsoft Windows 11', detail: 'SO Recomendado pela equipe', price: 399.00, checked: true }
+        ];
+        // Gamer Quiz Config
+        const gamerQuizQuestions = [
+            {
+                q: "Por que a equipe recomenda especificamente o Windows 11 para este build?",
+                options: [
+                    "Porque consome menos memória RAM que os outros sistemas do mercado.",
+                    "Devido ao suporte exclusivo ao DirectX 12 Ultimate, drivers estáveis e compatibilidade direta.",
+                    "Pelo fato de ser o único sistema que suporta Ray Tracing em qualquer jogo."
+                ],
+                correct: 1,
+                feedback: "Correto! O Windows possui a maior compatibilidade e suporte nativo ao DirectX 12 Ultimate da Microsoft."
+            },
+            {
+                q: "Qual é a função do Proton no sistema operacional Linux para jogos?",
+                options: [
+                    "É um antivírus integrado de alta performance.",
+                    "Uma camada de compatibilidade baseada em Wine para rodar jogos nativos de Windows.",
+                    "Um driver de overclock automático para as placas de vídeo NVIDIA."
+                ],
+                correct: 1,
+                feedback: "Excelente! O Proton é o que torna o Linux viável para jogar hoje em dia."
+            },
+            {
+                q: "Em termos de expansão e flexibilidade de hardware, qual a principal limitação do macOS?",
+                options: [
+                    "Não suporta mouses ou teclados de outras marcas.",
+                    "Incompatibilidade física com conexões de rede Wi-Fi.",
+                    "Impossibilidade de upgrade de GPU e hardware interno devido aos chips unificados."
+                ],
+                correct: 2,
+                feedback: "Exatamente! O ecossistema integrado impede atualizações de hardware futuras."
+            }
+        ];
+        let currentGamerQuestionIndex = 0;
+        // LLMs Data
+        const llmData = {
+            qwen: {
+                title: "Qwen 2.5 Coder (7B ou 14B)",
+                flag: "🇨🇳 Alibaba Cloud",
+                param: "7 Bilhões ou 14 Bilhões de Parâmetros",
+                vram: "6 GB a 8 GB (7B quantizado) / ~14 GB (14B)",
+                code: "Excelente (Líder em benchmarks abertos de escrita e refatoração)",
+                lang: "Excelente (Excelente suporte nativo a Português Brasileiro)",
+                license: "Comercial Permissiva (Apache 2.0)",
+                why: "Recomendado como a principal opção para o servidor Dell. Entrega qualidade comparável a modelos maiores e consome pouca VRAM, permitindo concorrência limpa de 20 usuários na RTX A4000."
+            },
+            deepseek: {
+                title: "DeepSeek Coder (7B ou 8B)",
+                flag: "🇨🇳 DeepSeek Inc.",
+                param: "6.7 Bilhões ou 8 Bilhões de Parâmetros",
+                vram: "6 GB a 8 GB para inferência normal",
+                code: "Excelente (Foco cirúrgico em preenchimento de código/FIM)",
+                lang: "Muito Bom (Bom entendimento de instruções em Português)",
+                license: "Comercial Aberta",
+                why: "Ótima alternativa para preenchimento automático em IDEs (Inline Auto-complete). A latência de tokens é baixíssima."
+            },
+            llama: {
+                title: "Llama 3.1 Coder (8B)",
+                flag: "🇺🇸 Meta AI",
+                param: "8 Bilhões de Parâmetros",
+                vram: "Cerca de 8 GB a 9 GB",
+                code: "Muito Bom (Raciocínio lógico e explicações detalhadas)",
+                lang: "Excelente (Suporte multilíngue massivo de nível corporativo)",
+                license: "Meta Llama 3 License (Comercial até 700M usuários)",
+                why: "Modelo de origem americana extremamente robusto para conversações gerais sobre código, porém ligeiramente atrás do Qwen 2.5 Coder em tarefas puras de geração sintática de código de programação."
+            },
+            phi: {
+                title: "Phi-3 Medium (14B)",
+                flag: "🇺🇸 Microsoft",
+                param: "14 Bilhões de Parâmetros",
+                vram: "Aproximadamente 12 GB a 14 GB",
+                code: "Bom (Muito otimizado para o tamanho)",
+                lang: "Muito Bom (Suporte robusto a múltiplos idiomas)",
+                license: "Comercial Aberta (MIT)",
+                why: "Focado em raciocínio de alta qualidade em dispositivos com menor capacidade, porém deixa pouca margem de VRAM livre na GPU RTX A4000 de 16GB para concorrência de múltiplos usuários."
+            }
+        };
+        // Von Neumann Mapping Info
+        const vnMapping = {
+            input: {
+                title: "Entrada (Input): Sensor DHT22",
+                desc: "Os sensores coletam as variações físicas de temperatura e umidade da sala de servidores e as transformam em pulsos elétricos digitais de leitura enviadas aos pinos de dados (GPIO) do microcontrolador."
+            },
+            cpu: {
+                title: "Processador: CPU Broadcom (Raspberry Pi 4)",
+                desc: "O chip de silício Broadcom ARM executa o script de controle escrito em Python, analisa os sinais do sensor, compara com os limites definidos e envia os sinais de decisão para os atuadores."
+            },
+            memory: {
+                title: "Memória: RAM e Armazenamento MicroSD",
+                desc: "A Memória RAM (física de 4GB) segura em cache as variáveis ativas do programa. O cartão MicroSD armazena o sistema operacional (Raspberry Pi OS) e guarda o histórico de dados no banco local SQLite."
+            },
+            output: {
+                title: "Saída (Output): Relés, Coolers e LCD",
+                desc: "Atuadores físicos modificam o ambiente. O sinal do Pi chaveia os relés que ligam os exaustores em potência regular (30-40°C) ou máxima (>40°C), além de atualizar o display LCD e mandar logs no banco de dados."
+            }
+        };
+        // Initialize Elements
+        window.addEventListener('DOMContentLoaded', () => {
+            initGamerBudget();
+            initGamerQuiz();
+            initVllmSim();
+            selectLLM('qwen');
+            selectVNNode('cpu');
+            updateClimateSim();
+            
+            // Slide indicator and listener
+            updateSlideUI();
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+            });
+        });
+        // Presentation Logic
+        function updateSlideUI() {
+            const slideElements = document.querySelectorAll('.slide');
+            slideElements.forEach((s, idx) => {
+                if (idx === currentSlideIndex) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+            // Update Counter
+            document.getElementById('slideCounter').textContent = `Slide ${currentSlideIndex + 1} / ${slides.length}`;
+            // Theme Switcher based on current slide's module
+            const currentModule = slides[currentSlideIndex].module;
+            document.body.className = ''; // clear
+            document.body.classList.add(`theme-${currentModule}`);
+            // Update Module Header Buttons active state
+            const moduleBtns = document.querySelectorAll('.module-btn');
+            moduleBtns.forEach(btn => {
+                if (btn.getAttribute('onclick').includes(currentModule)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            // Update Dots
+            updateDots();
+            // Update Progress Bar
+            const percent = ((currentSlideIndex) / (slides.length - 1)) * 100;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+        }
+        function updateDots() {
+            const dotsContainer = document.getElementById('slideDots');
+            dotsContainer.innerHTML = '';
+            
+            slides.forEach((slide, idx) => {
+                const dot = document.createElement('div');
+                dot.className = `slide-dot ${idx === currentSlideIndex ? 'active' : ''}`;
+                dot.setAttribute('data-title', `${slide.module.toUpperCase()} - ${slide.title}`);
+                dot.onclick = () => {
+                    currentSlideIndex = idx;
+                    updateSlideUI();
+                };
+                dotsContainer.appendChild(dot);
+            });
+        }
+        function nextSlide() {
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                updateSlideUI();
+            }
+        }
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateSlideUI();
+            }
+        }
+        function jumpToModule(moduleName) {
+            const targetIdx = slides.findIndex(s => s.module === moduleName);
+            if (targetIdx !== -1) {
+                currentSlideIndex = targetIdx;
+                updateSlideUI();
+            }
+        }
+        // --- INTERACTIVE: PC GAMER BUDGET ---
+        function initGamerBudget() {
+            const listEl = document.getElementById('gamerBudgetList');
+            listEl.innerHTML = '';
+            
+            gamerHardware.forEach((item, index) => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'budget-item';
+                itemEl.innerHTML = `
+                    <div class="budget-item-left">
+                        <input type="checkbox" class="budget-checkbox" id="hw-${item.id}" ${item.checked ? 'checked' : ''} onchange="toggleGamerHardware(${index})">
+                        <label class="budget-label" for="hw-${item.id}">
+                            ${item.name}
+                            <span>${item.detail}</span>
+                        </label>
+                    </div>
+                    <div class="budget-price">R$ ${item.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                `;
+                listEl.appendChild(itemEl);
+            });
+            calculateGamerTotal();
+        }
+        function toggleGamerHardware(index) {
+            gamerHardware[index].checked = !gamerHardware[index].checked;
+            calculateGamerTotal();
+        }
+        function calculateGamerTotal() {
+            const total = gamerHardware.reduce((sum, item) => sum + (item.checked ? item.price : 0), 0);
+            document.getElementById('gamerTotalCost').textContent = `R$ ${total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+        // --- INTERACTIVE: PC GAMER OS COMPARER ---
+        function switchGamerOSTab(btn, paneId) {
+            const tabs = btn.parentNode.querySelectorAll('.tab-btn');
+            tabs.forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            const panes = btn.parentNode.parentNode.querySelectorAll('.tab-pane');
+            panes.forEach(p => p.classList.remove('active'));
+            document.getElementById(paneId).classList.add('active');
+        }
+        // --- INTERACTIVE: PC GAMER QUIZ ---
+        function initGamerQuiz() {
+            currentGamerQuestionIndex = 0;
+            loadGamerQuizQuestion();
+        }
+        function loadGamerQuizQuestion() {
+            const feedbackEl = document.getElementById('gamerQuizFeedback');
+            feedbackEl.textContent = '';
+            
+            const qData = gamerQuizQuestions[currentGamerQuestionIndex];
+            document.getElementById('gamerQuizQuestion').textContent = qData.q;
+            
+            const optionsEl = document.getElementById('gamerQuizOptions');
+            optionsEl.innerHTML = '';
+            
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option';
+                btn.textContent = opt;
+                btn.onclick = () => answerGamerQuiz(idx);
+                optionsEl.appendChild(btn);
+            });
+        }
+        function answerGamerQuiz(selectedIdx) {
+            const qData = gamerQuizQuestions[currentGamerQuestionIndex];
+            const options = document.querySelectorAll('#gamerQuizOptions .quiz-option');
+            
+            options.forEach((opt, idx) => {
+                opt.disabled = true;
+                if (idx === qData.correct) {
+                    opt.classList.add('correct');
+                } else if (idx === selectedIdx) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            const feedbackEl = document.getElementById('gamerQuizFeedback');
+            feedbackEl.textContent = qData.feedback;
+            // Go to next question after delay
+            setTimeout(() => {
+                currentGamerQuestionIndex = (currentGamerQuestionIndex + 1) % gamerQuizQuestions.length;
+                loadGamerQuizQuestion();
+            }, 3500);
+        }
+        // --- INTERACTIVE: LOCAL VS CLOUD ---
+        function updateLocalCloudSim() {
+            const val = document.getElementById('localCloudSlider').value;
+            const cardCloud = document.getElementById('cardCloud');
+            const cardLocal = document.getElementById('cardLocal');
+            
+            // Adjust card opacity/glow based on slider
+            cardCloud.style.opacity = (100 - val) / 100 * 0.7 + 0.3;
+            cardLocal.style.opacity = val / 100 * 0.7 + 0.3;
+            if (val > 50) {
+                cardLocal.classList.add('active');
+                cardCloud.classList.remove('active');
+            } else {
+                cardCloud.classList.add('active');
+                cardLocal.classList.remove('active');
+            }
+        }
+        // --- INTERACTIVE: LLM COMPONENT ---
+        function selectLLM(key) {
+            // Update Active Card
+            const cards = document.querySelectorAll('.llm-card');
+            cards.forEach(c => {
+                if (c.getAttribute('onclick').includes(key)) {
+                    c.classList.add('active');
+                } else {
+                    c.classList.remove('active');
+                }
+            });
+            // Populate Info
+            const data = llmData[key];
+            const detailsBox = document.getElementById('llmDetailsBox');
+            detailsBox.innerHTML = `
+                <h3 style="color: var(--theme-color-primary); font-family: var(--font-title); font-size: 1.2rem; margin-bottom: 0.75rem;">${data.title} <span style="font-size:0.9rem; color:var(--theme-text-secondary);">${data.flag}</span></h3>
+                <table class="llm-details-table">
+                    <tr>
+                        <th style="width: 30%;">Tamanho Escalar</th>
+                        <td>${data.param}</td>
+                    </tr>
+                    <tr>
+                        <th>Consumo VRAM Esperado</th>
+                        <td style="font-family: var(--font-mono); color: #10b981; font-weight:700;">${data.vram}</td>
+                    </tr>
+                    <tr>
+                        <th>Qualidade Escrita Código</th>
+                        <td>${data.code}</td>
+                    </tr>
+                    <tr>
+                        <th>Suporte Multilíngue (PT)</th>
+                        <td>${data.lang}</td>
+                    </tr>
+                    <tr>
+                        <th>Licença de Uso</th>
+                        <td>${data.license}</td>
+                    </tr>
+                </table>
+                <div class="highlight-box" style="margin-top: 1rem; margin-bottom: 0; padding: 0.75rem 1rem;">
+                    <p style="font-size: 0.85rem; margin: 0;"><strong>Análise de Ajuste:</strong> ${data.why}</p>
+                </div>
+            `;
+        }
+        // --- INTERACTIVE: VLLM SIMULATOR ---
+        function initVllmSim() {
+            const container = document.getElementById('vllmMemBlocks');
+            container.innerHTML = '';
+            for (let i = 0; i < 32; i++) {
+                const block = document.createElement('div');
+                block.className = 'mem-block';
+                block.id = `vllm-block-${i}`;
+                container.appendChild(block);
+            }
+            updateVllmSim();
+        }
+        // Simulating the PagedAttention memory layout dynamically
+        function updateVllmSim() {
+            const users = parseInt(document.getElementById('vllmUserSlider').value);
+            document.getElementById('userCountLabel').textContent = users;
+            const baselineBlocks = 10; // Model weights
+            const pagedBlocksPerUser = 0.8; // Context keys/values dynamically paged
+            
+            const totalPagedBlocks = Math.min(32, Math.round(baselineBlocks + (users * pagedBlocksPerUser)));
+            const vramGB = (totalPagedBlocks * 0.5).toFixed(1);
+            document.getElementById('vllmVramStatus').textContent = `Uso: ${vramGB} GB / 16 GB`;
+            for (let i = 0; i < 32; i++) {
+                const block = document.getElementById(`vllm-block-${i}`);
+                block.className = 'mem-block'; // Reset
+                
+                if (i < baselineBlocks) {
+                    block.classList.add('occupied-static'); // Weights
+                } else if (i < totalPagedBlocks) {
+                    block.classList.add('occupied-paged'); // Active user context
+                } else if (i < totalPagedBlocks + Math.round(users * 0.2)) {
+                    // Simulating what Ollama would waste in fragmentation
+                    block.classList.add('unused-paged');
+                }
+            }
+        }
+        // --- INTERACTIVE: VON NEUMANN DIAGRAM ---
+        function selectVNNode(nodeKey) {
+            const nodes = document.querySelectorAll('.vn-node');
+            nodes.forEach(n => {
+                if (n.getAttribute('onclick').includes(nodeKey)) {
+                    n.classList.add('active');
+                } else {
+                    n.classList.remove('active');
+                }
+            });
+            const data = vnMapping[nodeKey];
+            document.getElementById('vnTitle').textContent = data.title;
+            document.getElementById('vnDesc').textContent = data.desc;
+        }
+        // --- INTERACTIVE: IOT CLIMATE SIMULATOR ---
+        let lastLoggedTemp = 0;
+        function updateClimateSim() {
+            const temp = parseFloat(document.getElementById('simTempSlider').value);
+            const umid = parseInt(document.getElementById('simUmidSlider').value);
+            document.getElementById('sliderTempLabel').textContent = `${temp.toFixed(1)}°C`;
+            document.getElementById('sliderUmidLabel').textContent = `${umid}%`;
+            const lcd = document.getElementById('lcdDisplay');
+            const c1 = document.getElementById('cooler1');
+            const c2 = document.getElementById('cooler2');
+            const warningLight = document.getElementById('warningLight');
+            let status = 'STANDBY';
+            let coolerStatus = 'DESLIGADOS';
+            // Reset classes
+            c1.setAttribute('class', 'fan-svg');
+            c2.setAttribute('class', 'fan-svg');
+            warningLight.classList.remove('active');
+            if (temp > 40.0) {
+                status = 'EMERGÊNCIA! ALERT';
+                coolerStatus = 'POTÊNCIA MÁXIMA';
+                c1.setAttribute('class', 'fan-svg spinning-fast');
+                c2.setAttribute('class', 'fan-svg spinning-fast');
+                warningLight.classList.add('active');
+                triggerSmartphoneNotification(temp);
+            } else if (temp >= 30.0) {
+                status = 'EXAUSTÃO ATIVA';
+                coolerStatus = 'EXAUSTOR 1 ATIVO';
+                c1.setAttribute('class', 'fan-svg spinning');
+                // Cooler 2 remains stopped
+            }
+            lcd.innerHTML = `T: ${temp.toFixed(1)} C  H: ${umid}%<br>STATUS: ${status}<br>COOLERS: ${coolerStatus}`;
+            // Add terminal log entry when temp changes significantly (0.5 degree steps) to avoid log spamming
+            if (Math.abs(temp - lastLoggedTemp) >= 0.5) {
+                addLogEntry(temp, umid, coolerStatus);
+                lastLoggedTemp = temp;
+            }
+        }
+        function addLogEntry(temp, umid, coolerStatus) {
+            const logsWin = document.getElementById('logsWindow');
+            const time = new Date().toLocaleTimeString('pt-BR');
+            const entry = document.createElement('div');
+            entry.innerHTML = `<span style="color:#64748b;">[${time}]</span> TEMP: ${temp.toFixed(1)}°C | UMID: ${umid}% | COOLER: ${coolerStatus} | <span style="color:#10b981;">DB: SALVO</span>`;
+            logsWin.appendChild(entry);
+            logsWin.scrollTop = logsWin.scrollHeight;
+        }
+        let notifTimeout;
+        function triggerSmartphoneNotification(temp) {
+            const notif = document.getElementById('alertNotif');
+            const notifBody = document.getElementById('alertNotifBody');
+            
+            notifBody.textContent = `A temperatura atingiu o nível crítico de ${temp.toFixed(1)}°C no rack dos servidores. Exaustão de emergência acionada.`;
+            notif.classList.add('show');
+            clearTimeout(notifTimeout);
+            notifTimeout = setTimeout(() => {
+                notif.classList.remove('show');
+            }, 6000); // hide after 6 seconds
+        }
+    </script>
+</body>
+</html>
+
+
+
+
